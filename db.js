@@ -4,8 +4,8 @@ var sequelize;
 
 if (env === 'production') {
 	sequelize = new Sequelize(process.env.DATABASE_URL, {
-		'dialect': 'postgress',
-	})
+		dialect: 'postgres'
+	});
 } else {
 	sequelize = new Sequelize(undefined, undefined, undefined, {
 		'dialect': 'sqlite',
@@ -20,3 +20,4 @@ db.sequelize = sequelize; // 's' the instance
 db.Sequelize = Sequelize; // 'S' the library 
 
 module.exports = db;
+
