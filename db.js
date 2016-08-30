@@ -1,4 +1,4 @@
-var Sequelize = require('Sequelize');
+var Sequelize = require('sequelize');
 var env = process.env.NODE_ENV || 'development'; 
 var sequelize;
 
@@ -16,8 +16,8 @@ if (env === 'production') {
 var db = {};
 
 db.todo = sequelize.import(__dirname + '/models/todo.js');
-db.sequelize = sequelize; // 's' the instance
-db.Sequelize = Sequelize; // 'S' the library 
+db.sequelize = sequelize; // 's' the instance, is this right??
+db.Sequelize = Sequelize; // 'S' the library,  ??  
 
 module.exports = db;
 
