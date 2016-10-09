@@ -10,7 +10,7 @@ var PORT = process.env.PORT || 3000;
 var todos = [];
 var todoNextId = 1;
 
-// middleware thing, don't rly understand
+// middleware thing
 app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
@@ -62,8 +62,12 @@ app.get('/todos/:id', middleware.requireAuthentication, function(req, res) {
 app.post('/todos', middleware.requireAuthentication, function(req, res) {
 	var body = _.pick(req.body, 'description', 'completed');
 
-	db.todo.create(body).then(function(todo) {
-		res.json(todo.toJSON());
+	db.todo.create(body).then(function (todo) {
+		req.user.addTodo(todo).then(function () {
+			return todo.reload();
+		}).then(function (todo) {
+			res.json(todo.toJSON());
+		});
 	}, function(e) {
 		res.status(400).json(e);
 	});
@@ -153,7 +157,9 @@ app.post('/users/login', function(req, res) {
 
 
 
-db.sequelize.sync({force: true}).then(function() {
+db.sequelize.sync(
+	//{force: true}
+	).then(function() {
 	app.listen(PORT, function() {
 		console.log('express listening on port ' + PORT + '!');
 	});

@@ -20,5 +20,8 @@ db.user = sequelize.import(__dirname + '/models/user.js');
 db.sequelize = sequelize; // 's' the instance, is this right??
 db.Sequelize = Sequelize; // 'S' the library,  ??  
 
+db.todo.belongsTo(db.user);
+db.user.hasMany(db.todo);
+
 module.exports = db;
 
